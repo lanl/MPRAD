@@ -1,0 +1,20 @@
+from distutils.core import setup
+from Cython.Build import cythonize
+from distutils.extension import Extension
+from Cython.Distutils import build_ext
+import numpy
+
+setup(
+  name = "proton",
+  cmdclass = {"build_ext": build_ext},
+  ext_modules = [
+    Extension("proton",
+              ["proton.pyx"],
+              libraries=["m", "mkl_vml_avx2",  "mkl_avx2", "mkl_def"],
+              extra_compile_args = ["-O3", "-xCORE-AVX2", "-axCORE-AVX512,MIC-AVX512", "-qopt-zmm-usage=high", "-qopenmp" , "-mkl"],
+              extra_link_args=['-qopenmp', "-xCORE-AVX2", "-axCORE-AVX512,MIC-AVX512", "-mkl"],
+              include_dirs=[numpy.get_include()],
+              )
+  ],
+
+)

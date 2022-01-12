@@ -1,0 +1,11 @@
+core : proton.so
+proton.so : proton.pyx
+    LDSHARED="icc -shared" CC=icc python setup.py build_ext --inplace --force
+    python2 setup.py build_ext --inplace --force
+    rm proton.c
+
+.PHONY : clear
+clear : 
+    -rm -f *.pyc *~ *.npz
+    -rm -rf build/
+

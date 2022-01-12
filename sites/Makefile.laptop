@@ -1,0 +1,13 @@
+#core : proton.cpython-36m-x86_64-linux-gnu.so
+#proton.cpython-36m-x86_64-linux-gnu.so: proton.pyx
+core : proton.so
+proton.so: proton.pyx
+	CC=gcc python setup.py build_ext --inplace --force
+	rm proton.c
+
+.PHONY : clear
+clear : 
+	##-rm -f *.pyc *~ *.npz
+	-rm -f */*~
+	-rm -f *~
+	-rm -rf build/
